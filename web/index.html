@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Markdown Reader</title>
+    <link rel="stylesheet" href="./theme.css" />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <header class="titlebar" data-drag-window>
+      <div class="titlebar-spacer" data-drag-window></div>
+      <div class="window-controls">
+        <button class="window-button" type="button" data-window-action="minimize" aria-label="Minimize">
+          <span></span>
+        </button>
+        <button class="window-button" type="button" data-window-action="maximize" aria-label="Maximize">
+          <span></span>
+        </button>
+        <button class="window-button close" type="button" data-window-action="close" aria-label="Close">
+          <span></span>
+        </button>
+      </div>
+    </header>
+    <div id="app">
+      <aside class="toc-panel">
+        <div class="app-title">大纲</div>
+        <nav id="toc" aria-label="Table of contents"></nav>
+      </aside>
+      <div id="toc-resizer" class="toc-resizer" role="separator" aria-orientation="vertical" aria-label="Resize outline"></div>
+      <main class="content-panel">
+        <section id="empty" class="state">
+          <h1>Open a Markdown file</h1>
+          <p>Launch with a local .md file path to read it here.</p>
+        </section>
+        <article id="viewer" class="markdown-body" hidden></article>
+      </main>
+    </div>
+    <script src="./main.js"></script>
+  </body>
+</html>

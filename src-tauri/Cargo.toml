@@ -1,0 +1,32 @@
+[package]
+name = "md-reader"
+version = "0.1.0"
+description = "A lightweight read-only Markdown reader for Windows"
+authors = ["md-reader"]
+edition = "2021"
+rust-version = "1.77"
+
+[lib]
+name = "md_reader_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+ammonia = "4"
+base64 = "0.22"
+html-escape = "0.2"
+mime_guess = "2"
+pulldown-cmark = "0.13"
+serde = { version = "1", features = ["derive"] }
+syntect = { version = "5", default-features = false, features = ["default-syntaxes", "html", "regex-fancy"] }
+tauri = { version = "2", features = [] }
+thiserror = "2"
+
+[profile.release]
+codegen-units = 1
+lto = "thin"
+opt-level = "z"
+panic = "abort"
+strip = true
