@@ -104,6 +104,19 @@ function showDocument(markdownDocument) {
   document.title = `${markdownDocument.title || "Markdown Reader"} - Markdown Reader`;
 }
 
+function startPendingDocumentPump() {
+  window.setInterval(async () => {
+    try {
+      const markdownDocument = await invoke("consume_pending_document");
+      if (!markdownDocument) return;
+      showDocument(markdownDocument);
+      renderToc(markdownDocument.toc);
+    } catch {
+      // Ignore malformed forwarded launches; the current document should stay readable.
+    }
+  }, 700);
+}
+
 function enhanceCodeBlocks() {
   for (const pre of viewer.querySelectorAll("pre")) {
     if (pre.parentElement?.classList.contains("code-shell")) continue;
@@ -155,11 +168,13 @@ async function bootstrap() {
     if (!markdownDocument) {
       showEmpty();
       renderToc([]);
+      startPendingDocumentPump();
       return;
     }
 
     showDocument(markdownDocument);
     renderToc(markdownDocument.toc);
+    startPendingDocumentPump();
   } catch (error) {
     showError(error instanceof Error ? error.message : String(error));
     renderToc([]);

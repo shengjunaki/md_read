@@ -2,6 +2,10 @@
 
 [English](./README.md)
 
+
+联系创作者：[jksheng.top](https://jksheng.top "盛俊凯的技术博客")
+
+
 极致轻量级+秒级冷启动 Windows Markdown Reader MVP。只读打开本地 `.md` / `.markdown` 文件，不做编辑、保存、云同步、插件、文件管理器或后台常驻。
 ![1](./neicun.png)
 ## MVP

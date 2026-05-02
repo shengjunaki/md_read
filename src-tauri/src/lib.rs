@@ -1,6 +1,7 @@
 mod app;
 mod cli;
 mod fs;
+mod instance;
 mod markdown;
 mod windows;
 

@@ -14,15 +14,16 @@ pub fn startup_markdown_path() -> Result<Option<PathBuf>, CliError> {
     };
 
     let path = PathBuf::from(raw);
-    let is_markdown = path
-        .extension()
-        .and_then(|value| value.to_str())
-        .map(|value| matches!(value.to_ascii_lowercase().as_str(), "md" | "markdown"))
-        .unwrap_or(false);
-
-    if !is_markdown {
+    if !is_markdown_path(&path) {
         return Err(CliError::UnsupportedExtension);
     }
 
     Ok(Some(path))
+}
+
+pub fn is_markdown_path(path: &std::path::Path) -> bool {
+    path.extension()
+        .and_then(|value| value.to_str())
+        .map(|value| matches!(value.to_ascii_lowercase().as_str(), "md" | "markdown"))
+        .unwrap_or(false)
 }

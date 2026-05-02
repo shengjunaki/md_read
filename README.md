@@ -2,6 +2,8 @@
 
 [简体中文](./README-zh.md)
 
+connect to author：[jksheng.top](https://jksheng.top "jksheng's blog")
+
 Ultra-lightweight Windows Markdown Reader with sub-second cold start. Read-only viewer for local `.md` / `.markdown` files — no editing, saving, cloud sync, plugins, file manager, or background service.
 
 ![1](./neicun.png)

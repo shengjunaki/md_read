@@ -1,9 +1,19 @@
-use crate::{cli, fs::document, markdown};
+use crate::{cli, fs::document, instance, markdown};
 use std::process::Command;
 
 #[tauri::command]
 fn load_startup_document() -> Result<Option<markdown::RenderedDocument>, String> {
     let Some(path) = cli::startup_markdown_path().map_err(|err| err.to_string())? else {
+        return Ok(None);
+    };
+
+    let source = document::read_markdown(&path).map_err(|err| err.to_string())?;
+    Ok(Some(markdown::render_document(&source)))
+}
+
+#[tauri::command]
+fn consume_pending_document() -> Result<Option<markdown::RenderedDocument>, String> {
+    let Some(path) = instance::consume_pending_path() else {
         return Ok(None);
     };
 
@@ -63,9 +73,15 @@ fn is_allowed_external_url(url: &str) -> bool {
 }
 
 pub fn run() {
+    let _guard = match instance::acquire_or_forward() {
+        instance::InstanceRole::Primary(guard) => guard,
+        instance::InstanceRole::Forwarded => return,
+    };
+
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![
             load_startup_document,
+            consume_pending_document,
             minimize_window,
             toggle_maximize_window,
             close_window,
